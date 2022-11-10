@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class MainViewModel(
@@ -16,8 +17,10 @@ class MainViewModel(
 
     fun add(a: String, b: String) {
         viewModelScope.launch {
-            val result = adder.add(a = a.toInt(), b = b.toInt())
-            resultState = result.toString()
+            adder.add(a = a.toInt(), b = b.toInt()).collect {
+                resultState = it.toString()
+            }
+
         }
     }
 }
