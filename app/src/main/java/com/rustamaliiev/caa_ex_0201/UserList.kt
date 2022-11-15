@@ -17,7 +17,7 @@ fun Screen(viewModel: MainViewModel = viewModel(factory = MainViewModelFactory()
 
 @Composable
 fun UserList(
-    users: List<User>
+    users: List<RoomUser>
 ) {
     LazyColumn(modifier = Modifier.padding(16.dp)) {
         items(users) {

@@ -1,6 +1,8 @@
 package com.rustamaliiev.caa_ex_0201
 
 import android.app.Application
+import androidx.room.Room
+import androidx.room.RoomDatabase
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
@@ -12,6 +14,7 @@ class MyApplication : Application() {
 
     companion object {
         lateinit var userService: UserService
+        lateinit var userDao: UserDao
     }
 
     override fun onCreate() {
@@ -28,5 +31,12 @@ class MyApplication : Application() {
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
         userService = retrofit.create(UserService::class.java)
+
+        val db = Room.databaseBuilder(
+            applicationContext,
+            AppDatabase::class.java, "my-database"
+        ).build()
+
+        userDao = db.userDao()
     }
 }
